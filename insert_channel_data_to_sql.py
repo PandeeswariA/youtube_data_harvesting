@@ -18,7 +18,6 @@ def insert_playlist(cursor, playlist_details):
         VALUES (%s, %s, %s)
     ''', (playlist_details['playlist_id'], playlist_details['channel_id'], playlist_details['playlist_name']))
 
-# def insert_video(cursor, video_info, playlist_id):
 def insert_video(cursor, video_info):
     cursor.execute('''
         INSERT INTO video (video_id, playlist_id, video_name, video_description, published_date, view_count,
@@ -54,10 +53,10 @@ def insert_data(channel_id):
         insert_channel(cursor, data['ChannelDetails'])
         insert_playlist(cursor, data['PlayList'])
 
-        playlist_id = data['PlayList']['playlist_id']
+        # playlist_id = data['PlayList']['playlist_id']
         for video_id, video_info in data['Videos'].items():
-            print("Video ID", video_id)
-            print("Playlist ID",playlist_id)
+            # print("Video ID", video_id)
+            # print("Playlist ID",playlist_id)
             insert_video(cursor, video_info)
             comments = video_info.get('Comments')
             if comments:
@@ -68,3 +67,4 @@ def insert_data(channel_id):
         return True
     except Exception as e:
         print("Exception {0}".format(e))
+        return False
